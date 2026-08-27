@@ -1,34 +1,23 @@
 # Batista Imports
 
-Site one-page da loja Batista Imports — moda masculina premium, Gravataí-RS.
+Site one-page da loja Batista Imports — moda masculina premium, Gravataí-RS — com checkout integrado a Google Sheets.
 
 ## Estrutura
-- `index.html` — site completo (HTML + CSS + JS em um único arquivo)
+- `index.html` — site completo (HTML + CSS + JS em um único arquivo), com catálogo dinâmico (carrega da planilha) e modal de checkout
 - `images/` — logo e fotos dos produtos
+- `Code.gs` — script do Google Apps Script (backend: grava pedidos, baixa estoque, devolve link de pagamento)
+- `DEPLOY.md` — passo a passo de configuração + texto pronto pro lojista
 
 ## Como publicar no GitHub Pages
-1. Crie um repositório novo no GitHub (ex: `batista-imports`)
-2. Suba estes arquivos (`index.html` e a pasta `images/`) para a raiz do repositório
-3. Vá em **Settings → Pages**
-4. Em "Source", selecione a branch `main` e a pasta `/ (root)`
-5. Salve — em alguns minutos o site estará no ar em `https://SEU-USUARIO.github.io/batista-imports/`
+1. Suba estes arquivos (`index.html`, pasta `images/`) para a raiz do repositório
+2. Settings → Pages → Source: branch `main`, pasta `/ (root)` → Save
+3. Aguarde alguns minutos; o link aparece na própria página de Settings → Pages
 
-## Atualizar produtos
-Abra `index.html`, procure `const produtos = [...]` perto do final do arquivo.
-Cada item segue este formato:
+## Configuração do checkout (planilha + Apps Script)
+Veja o `DEPLOY.md` — resumo: publique a aba PRODUTOS como CSV, implante o `Code.gs` como Web App,
+e cole as 3 URLs no topo do `<script>` do `index.html` (SHEET_CSV_URL, APPS_SCRIPT_URL, LINK_PAGAMENTO_PADRAO)
+mais o WHATSAPP_LOJA.
 
-```js
-{
-  nome: "Nome da peça",
-  categoria: "Camisetas", // Camisetas, Camisas, Bermudas, Moletons, Jaquetas, Conjuntos, Novidades
-  preco: 199.90,
-  precoAntigo: 239.90, // opcional, mostra "de/por"
-  imagem: "images/arquivo.jpeg",
-  destaque: true // aparece na seção "Em Destaque"
-}
-```
-
-Para trocar uma foto, basta substituir o arquivo dentro de `images/` mantendo o mesmo nome, ou apontar `imagem` para um novo arquivo.
-
-## Pendências
-- Preços atuais são placeholders — confirmar valores reais de cada peça.
+## Atualizar produtos no dia a dia
+Depois de configurado, **não edite mais o array no código** — mude preço e estoque direto na
+aba PRODUTOS da planilha. O array `produtosFallback` no `index.html` só é usado se a planilha falhar.

@@ -333,6 +333,88 @@
   @media(max-width:420px){
     .grid{grid-template-columns:1fr 1fr; gap:12px;}
   }
+
+  /* ---------- ESGOTADO ---------- */
+  .card.esgotado .card-media img{filter:grayscale(1) brightness(0.55);}
+  .card-badge.esgotado{
+    background:rgba(11,11,12,0.85); border-color:#7a2f2f; color:#e08a8a;
+  }
+  .card-cta[disabled]{
+    opacity:0.4; cursor:not-allowed; pointer-events:none;
+  }
+  .card-cta[disabled]:hover{background:transparent; color:var(--gold-light);}
+
+  /* ---------- CHECKOUT MODAL ---------- */
+  .modal-overlay{
+    position:fixed; inset:0; z-index:300; background:rgba(6,6,7,0.75);
+    backdrop-filter:blur(4px);
+    display:none; align-items:flex-start; justify-content:center;
+    overflow-y:auto; padding:24px 16px;
+  }
+  .modal-overlay.open{display:flex;}
+  body.modal-lock{overflow:hidden;}
+  .modal-box{
+    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+    max-width:520px; width:100%; margin:24px auto; padding:30px 26px 28px;
+    box-shadow:0 30px 80px rgba(0,0,0,0.6);
+    position:relative;
+  }
+  .modal-close{
+    position:absolute; top:16px; right:16px; width:34px; height:34px;
+    border:1px solid var(--line); border-radius:50%; display:flex; align-items:center; justify-content:center;
+    cursor:pointer; color:var(--grey); background:transparent; transition:.2s;
+  }
+  .modal-close:hover{color:var(--gold-light); border-color:var(--gold-dim);}
+  .modal-box h3{font-size:26px; color:var(--off-white); margin-bottom:4px;}
+  .modal-sub{font-size:12.5px; color:var(--grey); margin-bottom:22px; letter-spacing:0.02em;}
+  .modal-resumo{
+    display:flex; gap:14px; align-items:center; background:var(--black-soft);
+    border:1px solid var(--line); border-radius:var(--radius); padding:12px; margin-bottom:22px;
+  }
+  .modal-resumo img{width:58px; height:70px; object-fit:cover; border-radius:2px; flex-shrink:0;}
+  .modal-resumo .ri{flex:1; min-width:0;}
+  .modal-resumo .ri .nome{font-size:13.5px; color:var(--off-white); font-weight:600; line-height:1.3;}
+  .modal-resumo .ri .preco-linha{font-size:12px; color:var(--grey); margin-top:4px;}
+  .modal-resumo .rt{text-align:right; flex-shrink:0;}
+  .modal-resumo .rt .total-label{font-size:10px; text-transform:uppercase; letter-spacing:0.1em; color:var(--grey);}
+  .modal-resumo .rt .total-valor{font-family:'Bebas Neue'; font-size:22px; color:var(--gold-light);}
+  .form-row{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;}
+  .form-row.single{grid-template-columns:1fr;}
+  .form-row.qtd-row{grid-template-columns:1fr 2fr;}
+  .field label{
+    display:block; font-size:10.5px; text-transform:uppercase; letter-spacing:0.09em;
+    color:var(--grey); margin-bottom:6px; font-weight:600;
+  }
+  .field input, .field select{
+    width:100%; padding:11px 12px; background:var(--black-soft); border:1px solid var(--line);
+    border-radius:var(--radius); color:var(--off-white); font-size:14px; font-family:'Inter',sans-serif;
+    transition:border-color .2s;
+  }
+  .field input:focus, .field select:focus{outline:none; border-color:var(--gold);}
+  .field.err input, .field.err select{border-color:#c15656;}
+  .field .err-msg{font-size:11px; color:#e08a8a; margin-top:4px; display:none;}
+  .field.err .err-msg{display:block;}
+  .modal-actions{display:flex; flex-direction:column; gap:10px; margin-top:22px;}
+  .modal-actions .btn{justify-content:center; width:100%;}
+  .cep-status{font-size:11px; color:var(--grey); margin-top:5px; min-height:14px;}
+  .cep-status.ok{color:#8fc98f;}
+  .cep-status.bad{color:#e08a8a;}
+
+  /* Success screen inside modal */
+  .modal-success{display:none; text-align:center; padding:10px 0 4px;}
+  .modal-success.show{display:block;}
+  .modal-success .icon-ok{
+    width:56px; height:56px; border-radius:50%; border:1px solid var(--gold);
+    display:flex; align-items:center; justify-content:center; margin:0 auto 18px; color:var(--gold-light);
+  }
+  .modal-success h3{margin-bottom:10px;}
+  .modal-success p{color:var(--grey); font-size:14px; line-height:1.6; margin-bottom:22px;}
+
+  @media(max-width:480px){
+    .form-row{grid-template-columns:1fr;}
+    .form-row.qtd-row{grid-template-columns:1fr;}
+    .modal-box{padding:24px 18px 22px;}
+  }
 </style>
 </head>
 <body>
@@ -513,99 +595,339 @@
   <svg viewBox="0 0 24 24"><path d="M12.02 2C6.5 2 2 6.5 2 12.02c0 1.9.53 3.68 1.44 5.2L2 22l4.9-1.4a9.96 9.96 0 005.12 1.4c5.53 0 10.02-4.5 10.02-10.02C22.04 6.5 17.55 2 12.02 2zm0 18.16c-1.66 0-3.2-.47-4.5-1.28l-.32-.2-2.9.83.83-2.83-.21-.33a8.14 8.14 0 01-1.27-4.35c0-4.5 3.66-8.16 8.37-8.16 4.5 0 8.16 3.66 8.16 8.16 0 4.5-3.66 8.16-8.16 8.16zm4.5-6.1c-.25-.12-1.47-.72-1.7-.8-.23-.08-.4-.12-.56.12-.17.25-.65.8-.8.96-.15.17-.3.19-.55.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.25-.02-.38.11-.5.11-.11.25-.3.37-.44.12-.15.16-.25.25-.42.08-.17.04-.31-.02-.44-.06-.12-.56-1.35-.77-1.85-.2-.48-.4-.42-.56-.42h-.48c-.17 0-.44.06-.67.31-.23.25-.87.85-.87 2.08 0 1.22.9 2.4 1.02 2.57.12.17 1.77 2.7 4.28 3.79.6.26 1.06.41 1.43.53.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.18.2-.58.2-1.08.14-1.18-.06-.1-.23-.16-.48-.28z"/></svg>
 </a>
 
+<!-- ================= MODAL DE CHECKOUT ================= -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box" id="modalBox">
+    <button class="modal-close" id="modalClose" aria-label="Fechar">✕</button>
+
+    <div id="modalFormWrap">
+      <h3>Finalizar pedido</h3>
+      <p class="modal-sub">Preencha seus dados — você será direcionado ao pagamento.</p>
+
+      <div class="modal-resumo">
+        <img id="rImg" src="" alt="">
+        <div class="ri">
+          <div class="nome" id="rNome"></div>
+          <div class="preco-linha" id="rPrecoLinha"></div>
+        </div>
+        <div class="rt">
+          <div class="total-label">Total</div>
+          <div class="total-valor" id="rTotal"></div>
+        </div>
+      </div>
+
+      <form id="checkoutForm" novalidate>
+        <div class="form-row single">
+          <div class="field" data-f="nomeCliente">
+            <label>Nome completo</label>
+            <input type="text" name="nomeCliente" autocomplete="name">
+            <div class="err-msg">Informe seu nome completo.</div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field" data-f="whatsappCliente">
+            <label>WhatsApp</label>
+            <input type="tel" name="whatsappCliente" placeholder="(51) 99999-9999" autocomplete="tel">
+            <div class="err-msg">WhatsApp inválido.</div>
+          </div>
+          <div class="field" data-f="cep">
+            <label>CEP</label>
+            <input type="text" name="cep" placeholder="00000-000" autocomplete="postal-code" inputmode="numeric">
+            <div class="cep-status" id="cepStatus"></div>
+            <div class="err-msg">CEP inválido.</div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field" data-f="endereco" style="grid-column:1/3;">
+            <label>Endereço</label>
+            <input type="text" name="endereco" autocomplete="address-line1">
+            <div class="err-msg">Informe o endereço.</div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field" data-f="numero">
+            <label>Número</label>
+            <input type="text" name="numero" inputmode="numeric">
+            <div class="err-msg">Informe o número.</div>
+          </div>
+          <div class="field" data-f="complemento">
+            <label>Complemento (opcional)</label>
+            <input type="text" name="complemento">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field" data-f="bairro">
+            <label>Bairro</label>
+            <input type="text" name="bairro" autocomplete="address-level3">
+            <div class="err-msg">Informe o bairro.</div>
+          </div>
+          <div class="field" data-f="cidade">
+            <label>Cidade</label>
+            <input type="text" name="cidade" autocomplete="address-level2">
+            <div class="err-msg">Informe a cidade.</div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field" data-f="uf">
+            <label>UF</label>
+            <select name="uf">
+              <option value="">Selecione</option>
+              <option>AC</option><option>AL</option><option>AP</option><option>AM</option>
+              <option>BA</option><option>CE</option><option>DF</option><option>ES</option>
+              <option>GO</option><option>MA</option><option>MT</option><option>MS</option>
+              <option>MG</option><option>PA</option><option>PB</option><option>PR</option>
+              <option>PE</option><option>PI</option><option>RJ</option><option>RN</option>
+              <option>RS</option><option>RO</option><option>RR</option><option>SC</option>
+              <option>SP</option><option>SE</option><option>TO</option>
+            </select>
+            <div class="err-msg">Selecione a UF.</div>
+          </div>
+          <div class="field" data-f="qtd">
+            <label>Quantidade</label>
+            <input type="number" name="qtd" min="1" value="1" inputmode="numeric">
+            <div class="err-msg">Quantidade inválida.</div>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button type="submit" class="btn btn-gold" id="btnIrPagamento">Ir para o pagamento</button>
+          <button type="button" class="btn btn-outline" id="btnCancelar">Cancelar</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="modal-success" id="modalSuccess">
+      <div class="icon-ok">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+      </div>
+      <h3>Pedido registrado!</h3>
+      <p>Conclua o pagamento na página que abrimos para você. Se não abriu automaticamente, clique no botão abaixo.</p>
+      <div class="modal-actions">
+        <a class="btn btn-gold" id="btnPagamentoManual" target="_blank" rel="noopener">Ir para o pagamento</a>
+        <button type="button" class="btn btn-outline" id="btnFechar">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 /* =========================================================
-   CATÁLOGO DE PRODUTOS
-   Para atualizar depois: edite este array. Cada item precisa de:
-   nome, categoria, preco, precoAntigo (opcional), imagem, destaque (true/false)
+   CONFIGURAÇÃO — EDITE AQUI
 ========================================================= */
-const WHATSAPP_BASE = "https://wa.me/message/NZ6U5EUCELQZH1";
+const SHEET_CSV_URL = "COLE_AQUI_URL_CSV_PUBLICADO_DA_ABA_PRODUTOS";
+const APPS_SCRIPT_URL = "COLE_AQUI_URL_DO_WEBAPP";
+const LINK_PAGAMENTO_PADRAO = "COLE_AQUI_LINK_MERCADO_PAGO";
+const WHATSAPP_LOJA = "5551995772674"; // só dígitos, com DDI+DDD
+const WA_MESSAGE_LINK = "https://wa.me/message/NZ6U5EUCELQZH1"; // botão de atendimento (não é o de compra)
 
-const produtos = [
+/* =========================================================
+   CATÁLOGO DE PRODUTOS — FALLBACK
+   Usado se a planilha (SHEET_CSV_URL) falhar ou não estiver configurada.
+   Para atualizar preço/estoque no dia a dia, use a Google Sheet — não este array.
+========================================================= */
+const produtosFallback = [
   {
+    id: "1",
     nome: "Bermuda Armani Exchange Listrada",
     categoria: "Bermudas",
     preco: 189.90,
+    precoAntigo: null,
+    estoque: 8,
     imagem: "images/bermuda-ax.jpeg",
-    destaque: true
+    destaque: true,
+    ativo: true,
+    linkPagamento: ""
   },
   {
+    id: "2",
     nome: "Polo Armani Exchange Piquet + Boné",
     categoria: "Camisetas",
     preco: 229.90,
     precoAntigo: 269.90,
+    estoque: 6,
     imagem: "images/polo-ax.jpeg",
-    destaque: true
+    destaque: true,
+    ativo: true,
+    linkPagamento: ""
   },
   {
+    id: "3",
     nome: "Polo Tommy Hilfiger Preta",
     categoria: "Camisetas",
     preco: 199.90,
+    precoAntigo: null,
+    estoque: 10,
     imagem: "images/polo-th-preto.jpeg",
-    destaque: true
+    destaque: true,
+    ativo: true,
+    linkPagamento: ""
   },
   {
+    id: "4",
     nome: "Polo Tommy Hilfiger Branca + Boné",
     categoria: "Camisetas",
     preco: 219.90,
+    precoAntigo: null,
+    estoque: 7,
     imagem: "images/polo-th-branca.jpeg",
-    destaque: false
+    destaque: false,
+    ativo: true,
+    linkPagamento: ""
   },
   {
+    id: "5",
     nome: "Polo Tommy Hilfiger Vermelha + Boné",
     categoria: "Camisetas",
     preco: 219.90,
+    precoAntigo: null,
+    estoque: 5,
     imagem: "images/polo-th-vermelha.jpeg",
-    destaque: true
+    destaque: true,
+    ativo: true,
+    linkPagamento: ""
   },
   {
+    id: "6",
     nome: "Conjunto Polo Lacoste + Chinelo",
     categoria: "Conjuntos",
     preco: 249.90,
     precoAntigo: 289.90,
+    estoque: 6,
     imagem: "images/lacoste-grupo.jpeg",
-    destaque: true
+    destaque: true,
+    ativo: true,
+    linkPagamento: ""
   },
   {
+    id: "7",
     nome: "Polo Lacoste Preta + Chinelo",
     categoria: "Conjuntos",
     preco: 239.90,
+    precoAntigo: null,
+    estoque: 9,
     imagem: "images/polo-lacoste-preta.jpeg",
-    destaque: false
+    destaque: false,
+    ativo: true,
+    linkPagamento: ""
   },
   {
+    id: "8",
     nome: "Polo Lacoste Off White + Chinelo",
     categoria: "Conjuntos",
     preco: 239.90,
+    precoAntigo: null,
+    estoque: 4,
     imagem: "images/polo-lacoste-branca.jpeg",
-    destaque: false
+    destaque: false,
+    ativo: true,
+    linkPagamento: ""
   },
   {
+    id: "9",
     nome: "Polo Lacoste Marinho + Chinelo",
     categoria: "Conjuntos",
     preco: 239.90,
+    precoAntigo: null,
+    estoque: 0,
     imagem: "images/polo-lacoste-marinho.jpeg",
-    destaque: false
+    destaque: false,
+    ativo: true,
+    linkPagamento: ""
   }
 ];
 
+let produtos = produtosFallback;
 const categorias = ["Todos", "Camisetas", "Camisas", "Bermudas", "Moletons", "Jaquetas", "Conjuntos", "Novidades"];
 
 function fmt(v){
-  return v.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2});
+  return Number(v).toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2});
 }
 
-function waLink(nome){
-  const msg = encodeURIComponent(`Olá! Tenho interesse na peça: ${nome}. Pode me passar mais informações?`);
-  return `${WHATSAPP_BASE}?text=${msg}`;
+/* =========================================================
+   CSV PARSER (suporta aspas e vírgulas dentro de campos)
+========================================================= */
+function parseCSV(text){
+  const rows = [];
+  let row = [], field = "", inQuotes = false;
+  for(let i=0; i<text.length; i++){
+    const c = text[i], next = text[i+1];
+    if(inQuotes){
+      if(c === '"' && next === '"'){ field += '"'; i++; }
+      else if(c === '"'){ inQuotes = false; }
+      else{ field += c; }
+    } else {
+      if(c === '"'){ inQuotes = true; }
+      else if(c === ','){ row.push(field); field = ""; }
+      else if(c === '\r'){ /* ignore */ }
+      else if(c === '\n'){ row.push(field); rows.push(row); row = []; field = ""; }
+      else{ field += c; }
+    }
+  }
+  if(field.length || row.length){ row.push(field); rows.push(row); }
+  return rows.filter(r => r.some(c => c.trim() !== ""));
+}
+
+function toBool(v){
+  return String(v).trim().toLowerCase() === "sim";
+}
+
+async function carregarProdutosDaPlanilha(){
+  if(!SHEET_CSV_URL || SHEET_CSV_URL.startsWith("COLE_AQUI")) return null;
+  try{
+    const res = await fetch(SHEET_CSV_URL, { cache: "no-store" });
+    if(!res.ok) throw new Error("csv fetch failed");
+    const text = await res.text();
+    const rows = parseCSV(text);
+    if(rows.length < 2) return null;
+
+    // Cabeçalho está na LINHA 2 da planilha (linha 1 = título) => índice 1 do CSV
+    const header = rows[1].map(h => h.trim().toLowerCase());
+    const dataRows = rows.slice(2);
+
+    const idx = (name) => header.indexOf(name);
+    const iId = idx("id"), iNome = idx("nome"), iCat = idx("categoria"),
+          iPreco = idx("preco"), iPrecoAntigo = idx("precoantigo"), iEstoque = idx("estoque"),
+          iDestaque = idx("destaque"), iAtivo = idx("ativo"), iImagem = idx("imagem"),
+          iLink = idx("linkpagamento");
+
+    if(iNome === -1 || iPreco === -1) return null;
+
+    const lista = dataRows.map(r => {
+      const nome = (r[iNome] || "").trim();
+      if(!nome) return null;
+      const precoAntigoRaw = iPrecoAntigo > -1 ? parseFloat((r[iPrecoAntigo]||"").replace(",",".")) : NaN;
+      return {
+        id: iId > -1 ? (r[iId]||"").trim() : nome,
+        nome,
+        categoria: iCat > -1 ? (r[iCat]||"").trim() : "",
+        preco: parseFloat((r[iPreco]||"0").replace(",",".")) || 0,
+        precoAntigo: !isNaN(precoAntigoRaw) && precoAntigoRaw > 0 ? precoAntigoRaw : null,
+        estoque: iEstoque > -1 ? (parseInt((r[iEstoque]||"0"),10) || 0) : 0,
+        destaque: iDestaque > -1 ? toBool(r[iDestaque]) : false,
+        ativo: iAtivo > -1 ? toBool(r[iAtivo]) : true,
+        imagem: iImagem > -1 && r[iImagem] ? ("images/" + r[iImagem].trim().replace(/^images\//,"")) : "images/logo.jpeg",
+        linkPagamento: iLink > -1 ? (r[iLink]||"").trim() : ""
+      };
+    }).filter(Boolean).filter(p => p.ativo);
+
+    return lista.length ? lista : null;
+  }catch(err){
+    console.warn("Falha ao carregar planilha, usando catálogo local:", err);
+    return null;
+  }
+}
+
+function waLinkAtendimento(){
+  return WA_MESSAGE_LINK;
 }
 
 function cardHTML(p){
+  const esgotado = p.estoque <= 0;
   return `
-  <article class="card">
+  <article class="card ${esgotado ? 'esgotado' : ''}" data-id="${p.id}">
     <div class="card-media">
       <img src="${p.imagem}" alt="${p.nome}" loading="lazy">
-      ${p.precoAntigo ? '<span class="card-badge">Oferta</span>' : ''}
+      ${esgotado ? '<span class="card-badge esgotado">Esgotado</span>' : (p.precoAntigo ? '<span class="card-badge">Oferta</span>' : '')}
     </div>
     <div class="card-body">
       <span class="cat">${p.categoria}</span>
@@ -614,37 +936,262 @@ function cardHTML(p){
         <span class="price">R$ ${fmt(p.preco)}</span>
         ${p.precoAntigo ? `<span class="old">R$ ${fmt(p.precoAntigo)}</span>` : ''}
       </div>
-      <a class="card-cta" href="${waLink(p.nome)}" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24"><path d="M12.02 2C6.5 2 2 6.5 2 12.02c0 1.9.53 3.68 1.44 5.2L2 22l4.9-1.4a9.96 9.96 0 005.12 1.4c5.53 0 10.02-4.5 10.02-10.02C22.04 6.5 17.55 2 12.02 2zm0 18.16c-1.66 0-3.2-.47-4.5-1.28l-.32-.2-2.9.83.83-2.83-.21-.33a8.14 8.14 0 01-1.27-4.35c0-4.5 3.66-8.16 8.37-8.16 4.5 0 8.16 3.66 8.16 8.16 0 4.5-3.66 8.16-8.16 8.16z"/></svg>
-        Chamar no WhatsApp
-      </a>
+      <button class="card-cta btn-comprar" type="button" data-id="${p.id}" ${esgotado ? 'disabled' : ''}>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="21" r="1"/><circle cx="18" cy="21" r="1"/><path d="M6 6L4 2H2"/></svg>
+        ${esgotado ? 'Esgotado' : 'Comprar'}
+      </button>
     </div>
   </article>`;
 }
 
-// Destaques
 const featuredGrid = document.getElementById('featuredGrid');
-featuredGrid.innerHTML = produtos.filter(p => p.destaque).map(cardHTML).join('');
-
-// Filtros
 const filtersEl = document.getElementById('filters');
-filtersEl.innerHTML = categorias.map((c,i) => `<button class="filter-btn ${i===0?'active':''}" data-filter="${c}">${c}</button>`).join('');
-
 const catalogGrid = document.getElementById('catalogGrid');
+
+function renderTudo(){
+  featuredGrid.innerHTML = produtos.filter(p => p.destaque).map(cardHTML).join('');
+  filtersEl.innerHTML = categorias.map((c,i) => `<button class="filter-btn ${i===0?'active':''}" data-filter="${c}">${c}</button>`).join('');
+  renderCatalog("Todos");
+}
+
 function renderCatalog(filter){
   const list = filter === "Todos" ? produtos : produtos.filter(p => p.categoria === filter);
   catalogGrid.innerHTML = list.length
     ? list.map(cardHTML).join('')
     : `<p style="color:var(--grey); grid-column:1/-1;">Novidades chegando em breve nesta categoria. Fale no WhatsApp e a gente te avisa primeiro.</p>`;
 }
-renderCatalog("Todos");
 
-filtersEl.addEventListener('click', (e)=>{
+filtersEl && filtersEl.addEventListener('click', (e)=>{
   const btn = e.target.closest('.filter-btn');
   if(!btn) return;
   filtersEl.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   renderCatalog(btn.dataset.filter);
+});
+
+// Delegação de clique nos botões "Comprar" (destaques + catálogo)
+document.addEventListener('click', (e)=>{
+  const btn = e.target.closest('.btn-comprar');
+  if(!btn || btn.disabled) return;
+  abrirCheckout(btn.dataset.id);
+});
+
+(async function init(){
+  const daPlanilha = await carregarProdutosDaPlanilha();
+  if(daPlanilha) produtos = daPlanilha;
+  renderTudo();
+})();
+
+/* =========================================================
+   CHECKOUT MODAL
+========================================================= */
+const modalOverlay = document.getElementById('modalOverlay');
+const modalFormWrap = document.getElementById('modalFormWrap');
+const modalSuccess = document.getElementById('modalSuccess');
+const checkoutForm = document.getElementById('checkoutForm');
+const cepStatus = document.getElementById('cepStatus');
+let produtoAtual = null;
+
+function abrirCheckout(id){
+  produtoAtual = produtos.find(p => String(p.id) === String(id));
+  if(!produtoAtual || produtoAtual.estoque <= 0) return;
+
+  modalFormWrap.style.display = '';
+  modalSuccess.classList.remove('show');
+  checkoutForm.reset();
+  checkoutForm.qtd.value = 1;
+  checkoutForm.qtd.max = produtoAtual.estoque;
+  cepStatus.textContent = '';
+  cepStatus.className = 'cep-status';
+  limparErros();
+
+  document.getElementById('rImg').src = produtoAtual.imagem;
+  document.getElementById('rImg').alt = produtoAtual.nome;
+  document.getElementById('rNome').textContent = produtoAtual.nome;
+  document.getElementById('rPrecoLinha').textContent = `R$ ${fmt(produtoAtual.preco)} cada · em estoque: ${produtoAtual.estoque}`;
+  atualizarTotal();
+
+  modalOverlay.classList.add('open');
+  document.body.classList.add('modal-lock');
+}
+
+function fecharCheckout(){
+  modalOverlay.classList.remove('open');
+  document.body.classList.remove('modal-lock');
+}
+
+function atualizarTotal(){
+  if(!produtoAtual) return;
+  const qtd = Math.max(1, parseInt(checkoutForm.qtd.value, 10) || 1);
+  document.getElementById('rTotal').textContent = `R$ ${fmt(produtoAtual.preco * qtd)}`;
+}
+
+document.getElementById('modalClose').addEventListener('click', fecharCheckout);
+document.getElementById('btnCancelar').addEventListener('click', fecharCheckout);
+document.getElementById('btnFechar').addEventListener('click', fecharCheckout);
+modalOverlay.addEventListener('click', (e)=>{ if(e.target === modalOverlay) fecharCheckout(); });
+document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && modalOverlay.classList.contains('open')) fecharCheckout(); });
+checkoutForm.qtd.addEventListener('input', atualizarTotal);
+
+function limparErros(){
+  checkoutForm.querySelectorAll('.field').forEach(f => f.classList.remove('err'));
+}
+function marcarErro(nomeCampo){
+  const f = checkoutForm.querySelector(`.field[data-f="${nomeCampo}"]`);
+  if(f) f.classList.add('err');
+}
+
+// Busca de CEP via ViaCEP
+let cepTimeout;
+checkoutForm.cep.addEventListener('blur', buscarCep);
+async function buscarCep(){
+  const cep = checkoutForm.cep.value.replace(/\D/g,'');
+  if(cep.length !== 8) return;
+  cepStatus.textContent = 'Buscando endereço...';
+  cepStatus.className = 'cep-status';
+  try{
+    const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+    const data = await res.json();
+    if(data.erro){
+      cepStatus.textContent = 'CEP não encontrado — preencha manualmente.';
+      cepStatus.className = 'cep-status bad';
+      return;
+    }
+    checkoutForm.endereco.value = data.logradouro || checkoutForm.endereco.value;
+    checkoutForm.bairro.value = data.bairro || checkoutForm.bairro.value;
+    checkoutForm.cidade.value = data.localidade || checkoutForm.cidade.value;
+    if(data.uf) checkoutForm.uf.value = data.uf;
+    cepStatus.textContent = 'Endereço encontrado.';
+    cepStatus.className = 'cep-status ok';
+  }catch(err){
+    cepStatus.textContent = 'Não foi possível buscar o CEP — preencha manualmente.';
+    cepStatus.className = 'cep-status bad';
+  }
+}
+
+function validarFormulario(){
+  limparErros();
+  let ok = true;
+  const f = checkoutForm;
+
+  if(!f.nomeCliente.value.trim() || f.nomeCliente.value.trim().split(' ').length < 2){
+    marcarErro('nomeCliente'); ok = false;
+  }
+  const waDigits = f.whatsappCliente.value.replace(/\D/g,'');
+  if(waDigits.length < 10 || waDigits.length > 11){
+    marcarErro('whatsappCliente'); ok = false;
+  }
+  const cepDigits = f.cep.value.replace(/\D/g,'');
+  if(cepDigits.length !== 8){
+    marcarErro('cep'); ok = false;
+  }
+  if(!f.endereco.value.trim()){ marcarErro('endereco'); ok = false; }
+  if(!f.numero.value.trim()){ marcarErro('numero'); ok = false; }
+  if(!f.bairro.value.trim()){ marcarErro('bairro'); ok = false; }
+  if(!f.cidade.value.trim()){ marcarErro('cidade'); ok = false; }
+  if(!f.uf.value){ marcarErro('uf'); ok = false; }
+  const qtd = parseInt(f.qtd.value, 10);
+  if(!qtd || qtd < 1 || (produtoAtual && qtd > produtoAtual.estoque)){
+    marcarErro('qtd'); ok = false;
+  }
+
+  return ok;
+}
+
+function montarMensagemWhatsApp(dados){
+  const linhas = [
+    "*Novo pedido — Batista Imports*",
+    "",
+    `Produto: ${dados.produtoNome}`,
+    `Qtd: ${dados.qtd}`,
+    `Total: R$ ${fmt(dados.total)}`,
+    "",
+    `Cliente: ${dados.nomeCliente}`,
+    `WhatsApp: ${dados.whatsappCliente}`,
+    "",
+    `Endereço: ${dados.endereco}, ${dados.numero}${dados.complemento ? ' - ' + dados.complemento : ''}`,
+    `Bairro: ${dados.bairro}`,
+    `Cidade/UF: ${dados.cidade} - ${dados.uf}`,
+    `CEP: ${dados.cep}`,
+    "",
+    "Vou pagar pelo link agora."
+  ];
+  return linhas.join('\n');
+}
+
+function abrirWhatsAppLoja(dados){
+  const msg = encodeURIComponent(montarMensagemWhatsApp(dados));
+  window.open(`https://wa.me/${WHATSAPP_LOJA}?text=${msg}`, '_blank');
+}
+
+checkoutForm.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  if(!validarFormulario() || !produtoAtual) return;
+
+  const f = checkoutForm;
+  const qtd = parseInt(f.qtd.value, 10);
+  const total = produtoAtual.preco * qtd;
+
+  const dados = {
+    produtoId: produtoAtual.id,
+    produtoNome: produtoAtual.nome,
+    preco: produtoAtual.preco,
+    qtd,
+    total,
+    nomeCliente: f.nomeCliente.value.trim(),
+    whatsappCliente: f.whatsappCliente.value.replace(/\D/g,''),
+    cep: f.cep.value.replace(/\D/g,''),
+    endereco: f.endereco.value.trim(),
+    numero: f.numero.value.trim(),
+    complemento: f.complemento.value.trim(),
+    bairro: f.bairro.value.trim(),
+    cidade: f.cidade.value.trim(),
+    uf: f.uf.value
+  };
+
+  const btn = document.getElementById('btnIrPagamento');
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+
+  const linkPadrao = produtoAtual.linkPagamento || LINK_PAGAMENTO_PADRAO;
+  let paymentUrl = (linkPadrao && !linkPadrao.startsWith('COLE_AQUI')) ? linkPadrao : null;
+
+  const scriptConfigurado = APPS_SCRIPT_URL && !APPS_SCRIPT_URL.startsWith('COLE_AQUI');
+
+  if(scriptConfigurado){
+    try{
+      const res = await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(dados)
+      });
+      const json = await res.json();
+      if(json && json.ok && json.paymentUrl){
+        paymentUrl = json.paymentUrl;
+      }
+    }catch(err){
+      console.warn('Falha ao registrar pedido no Apps Script, seguindo com fallback:', err);
+    }
+  }
+
+  // Abre WhatsApp da loja em paralelo (fallback garantido)
+  abrirWhatsAppLoja(dados);
+
+  btn.disabled = false;
+  btn.textContent = 'Ir para o pagamento';
+
+  // Mostra tela de sucesso
+  modalFormWrap.style.display = 'none';
+  modalSuccess.classList.add('show');
+  const btnPagManual = document.getElementById('btnPagamentoManual');
+  if(paymentUrl){
+    btnPagManual.href = paymentUrl;
+    btnPagManual.style.display = '';
+    setTimeout(()=>{ window.location.href = paymentUrl; }, 900);
+  } else {
+    btnPagManual.style.display = 'none';
+  }
 });
 
 // Links de categoria no rodapé abrem o catálogo já filtrado
