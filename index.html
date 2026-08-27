@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Batista Imports — Moda Masculina Premium | Gravataí-RS</title>
+<meta name="description" content="Loja online de moda masculina premium. Peças selecionadas, exclusividade e envio para todo o Brasil. Compre pelo WhatsApp.">
+<meta name="theme-color" content="#0b0b0c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black: #0b0b0c;
+    --black-soft: #131315;
+    --panel: #17171a;
+    --gold: #c9a24d;
+    --gold-light: #e6c878;
+    --gold-dim: #8a6f34;
+    --off-white: #f3f1ec;
+    --grey: #8c8a86;
+    --line: rgba(201,162,77,0.18);
+    --radius: 2px;
+    --maxw: 1180px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--black);
+    color:var(--off-white);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{display:block; max-width:100%;}
+  a{text-decoration:none; color:inherit;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px;}
+  h1,h2,h3{font-family:'Bebas Neue',sans-serif; letter-spacing:0.03em; font-weight:400;}
+  .eyebrow{
+    font-size:11px; letter-spacing:0.28em; text-transform:uppercase;
+    color:var(--gold); font-weight:600;
+  }
+  @media(prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}
+  }
+
+  /* ---------- HEADER ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(11,11,12,0.85);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+    transition:background .3s;
+  }
+  .header-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    height:72px;
+  }
+  .logo-mark{display:flex; align-items:center; gap:10px;}
+  .logo-mark img{height:44px; width:auto; filter:drop-shadow(0 0 8px rgba(201,162,77,0.25));}
+  nav.main-nav{display:flex; gap:34px;}
+  nav.main-nav a{
+    font-size:13px; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--off-white); opacity:0.75; font-weight:500;
+    position:relative; padding:4px 0; transition:opacity .25s;
+  }
+  nav.main-nav a:hover{opacity:1; color:var(--gold-light);}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:12px 22px; font-size:12.5px; letter-spacing:0.1em; text-transform:uppercase;
+    font-weight:700; border-radius:var(--radius); cursor:pointer; border:1px solid transparent;
+    transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
+  }
+  .btn-gold{
+    background:linear-gradient(135deg,var(--gold-light),var(--gold) 55%,var(--gold-dim));
+    color:#141209;
+  }
+  .btn-gold:hover{transform:translateY(-2px); box-shadow:0 10px 24px rgba(201,162,77,0.28);}
+  .btn-outline{
+    border-color:var(--gold); color:var(--gold-light);
+    background:transparent;
+  }
+  .btn-outline:hover{background:rgba(201,162,77,0.08); transform:translateY(-2px);}
+  .header-cta{display:flex; align-items:center; gap:16px;}
+  .burger{display:none; flex-direction:column; gap:5px; cursor:pointer; z-index:110;}
+  .burger span{width:24px; height:2px; background:var(--gold-light); display:block; transition:.3s;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative; min-height:100svh; display:flex; align-items:center;
+    padding-top:72px;
+    background:
+      radial-gradient(ellipse at 75% 20%, rgba(201,162,77,0.14), transparent 55%),
+      radial-gradient(ellipse at 15% 85%, rgba(201,162,77,0.08), transparent 50%),
+      var(--black);
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"";
+    position:absolute; inset:0;
+    background-image: repeating-linear-gradient(115deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 120px);
+    pointer-events:none;
+  }
+  .hero-slash{
+    position:absolute; top:-10%; right:8%; width:340px; height:150%;
+    background:linear-gradient(180deg, transparent, rgba(201,162,77,0.10), transparent);
+    transform:rotate(18deg);
+    pointer-events:none;
+  }
+  .hero-inner{position:relative; z-index:2; padding-top:40px; padding-bottom:60px;}
+  .hero .eyebrow{margin-bottom:18px; display:block;}
+  .hero h1{
+    font-size:clamp(48px, 9vw, 108px);
+    line-height:0.92;
+    color:var(--off-white);
+    max-width:920px;
+  }
+  .hero h1 em{
+    font-style:normal;
+    background:linear-gradient(135deg,var(--gold-light),var(--gold) 60%,var(--gold-dim));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero p.lead{
+    margin-top:24px; max-width:480px; font-size:17px; line-height:1.6; color:var(--grey);
+  }
+  .hero-actions{display:flex; gap:16px; margin-top:38px; flex-wrap:wrap;}
+  .hero-stats{
+    display:flex; gap:44px; margin-top:64px; flex-wrap:wrap;
+    border-top:1px solid var(--line); padding-top:28px; max-width:640px;
+  }
+  .hero-stats div{display:flex; flex-direction:column; gap:4px;}
+  .hero-stats .num{font-family:'Bebas Neue'; font-size:34px; color:var(--gold-light); letter-spacing:0.02em;}
+  .hero-stats .label{font-size:11.5px; text-transform:uppercase; letter-spacing:0.1em; color:var(--grey);}
+
+  /* ---------- SECTION GENERIC ---------- */
+  section{padding:96px 0;}
+  .section-head{
+    display:flex; justify-content:space-between; align-items:flex-end; gap:24px;
+    margin-bottom:52px; flex-wrap:wrap;
+  }
+  .section-head h2{font-size:clamp(34px,5vw,58px); color:var(--off-white);}
+  .section-head p{color:var(--grey); max-width:380px; font-size:14.5px; line-height:1.6;}
+
+  /* ---------- SOBRE ---------- */
+  .about{
+    background:var(--black-soft);
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  }
+  .about-grid{
+    display:grid; grid-template-columns:0.9fr 1.1fr; gap:60px; align-items:center;
+  }
+  .about-visual{
+    position:relative; aspect-ratio:4/5; border:1px solid var(--line); border-radius:var(--radius);
+    overflow:hidden;
+  }
+  .about-visual img{width:100%; height:100%; object-fit:cover; object-position:top center;}
+  .about-visual::before{
+    content:""; position:absolute; inset:0;
+    background:linear-gradient(180deg, transparent 40%, rgba(11,11,12,0.85));
+    z-index:1;
+  }
+  .about-visual .tag{
+    position:absolute; bottom:20px; left:20px; z-index:2;
+    font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold-light);
+  }
+  .about-text .eyebrow{margin-bottom:16px;}
+  .about-text h2{font-size:clamp(30px,4vw,46px); margin-bottom:20px; line-height:1.05;}
+  .about-text p{color:var(--grey); font-size:15.5px; line-height:1.75; max-width:520px;}
+  .about-points{display:grid; grid-template-columns:1fr 1fr; gap:20px 32px; margin-top:34px;}
+  .about-points div{
+    border-top:1px solid var(--line); padding-top:14px;
+    font-size:13px; color:var(--off-white); letter-spacing:0.02em;
+  }
+  .about-points strong{display:block; color:var(--gold-light); font-family:'Bebas Neue'; font-size:20px; letter-spacing:0.03em; margin-bottom:4px; font-weight:400;}
+
+  /* ---------- CATEGORY FILTER ---------- */
+  .filters{
+    display:flex; gap:10px; flex-wrap:wrap; margin-bottom:44px;
+  }
+  .filter-btn{
+    padding:9px 18px; font-size:12px; letter-spacing:0.08em; text-transform:uppercase;
+    border:1px solid var(--line); border-radius:20px; color:var(--grey);
+    cursor:pointer; background:transparent; transition:.25s;
+    font-family:'Inter',sans-serif; font-weight:600;
+  }
+  .filter-btn:hover{color:var(--off-white); border-color:var(--gold-dim);}
+  .filter-btn.active{
+    background:var(--gold); color:#141209; border-color:var(--gold);
+  }
+
+  /* ---------- PRODUCT GRID ---------- */
+  .grid{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:28px;
+  }
+  .card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    overflow:hidden;
+    display:flex; flex-direction:column;
+    transition:transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+  }
+  .card:hover{transform:translateY(-6px); border-color:var(--gold-dim); box-shadow:0 18px 40px rgba(0,0,0,0.45);}
+  .card-media{position:relative; aspect-ratio:4/5; overflow:hidden; background:#000;}
+  .card-media img{width:100%; height:100%; object-fit:cover; transition:transform .6s ease;}
+  .card:hover .card-media img{transform:scale(1.06);}
+  .card-badge{
+    position:absolute; top:14px; left:14px;
+    background:rgba(11,11,12,0.75); border:1px solid var(--gold-dim);
+    color:var(--gold-light); font-size:10px; letter-spacing:0.12em; text-transform:uppercase;
+    padding:5px 10px; border-radius:20px; backdrop-filter:blur(4px);
+  }
+  .card-body{padding:20px 20px 22px; display:flex; flex-direction:column; gap:12px; flex:1;}
+  .card-body .cat{font-size:10.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--grey);}
+  .card-body h3{font-size:22px; color:var(--off-white); letter-spacing:0.02em; line-height:1.1;}
+  .card-price{
+    display:flex; align-items:baseline; gap:8px; margin-top:auto;
+  }
+  .card-price .price{font-family:'Bebas Neue'; font-size:26px; color:var(--gold-light);}
+  .card-price .old{font-size:13px; color:var(--grey); text-decoration:line-through;}
+  .card-cta{
+    margin-top:6px; display:flex; align-items:center; justify-content:center; gap:8px;
+    padding:12px; border:1px solid var(--gold); border-radius:var(--radius);
+    color:var(--gold-light); font-size:12px; letter-spacing:0.08em; text-transform:uppercase; font-weight:700;
+    transition:.25s;
+  }
+  .card-cta:hover{background:var(--gold); color:#141209;}
+  .card-cta svg{width:16px; height:16px; fill:currentColor;}
+
+  /* ---------- VANTAGENS ---------- */
+  .perks{background:var(--black-soft); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .perks-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line);}
+  .perk{background:var(--black-soft); padding:40px 30px;}
+  .perk .icon{
+    width:44px; height:44px; border:1px solid var(--gold-dim); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; margin-bottom:20px;
+    color:var(--gold-light);
+  }
+  .perk .icon svg{width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:1.6;}
+  .perk h3{font-size:19px; color:var(--off-white); margin-bottom:8px; letter-spacing:0.02em;}
+  .perk p{font-size:13.5px; color:var(--grey); line-height:1.6;}
+
+  /* ---------- CTA STRIP ---------- */
+  .cta-strip{
+    padding:90px 0; text-align:center;
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(201,162,77,0.14), transparent 60%),
+      var(--black);
+  }
+  .cta-strip .eyebrow{display:block; margin-bottom:16px;}
+  .cta-strip h2{font-size:clamp(32px,6vw,64px); max-width:720px; margin:0 auto 26px; line-height:1.05;}
+  .cta-strip p{color:var(--grey); max-width:460px; margin:0 auto 34px; font-size:15px;}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--black-soft); border-top:1px solid var(--line); padding:64px 0 30px;}
+  .footer-grid{
+    display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px; padding-bottom:44px;
+    border-bottom:1px solid var(--line);
+  }
+  .footer-brand img{height:40px; margin-bottom:16px;}
+  .footer-brand p{color:var(--grey); font-size:13.5px; line-height:1.7; max-width:280px;}
+  .footer-col h4{
+    font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold-light);
+    margin-bottom:16px; font-weight:700;
+  }
+  .footer-col a, .footer-col p{
+    display:block; color:var(--grey); font-size:13.5px; margin-bottom:10px; transition:.2s;
+  }
+  .footer-col a:hover{color:var(--gold-light);}
+  .footer-bottom{
+    display:flex; justify-content:space-between; align-items:center; padding-top:26px; flex-wrap:wrap; gap:12px;
+  }
+  .footer-bottom p{font-size:12px; color:var(--grey);}
+  .social-row{display:flex; gap:14px;}
+  .social-row a{
+    width:38px; height:38px; border:1px solid var(--line); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; color:var(--gold-light);
+    transition:.25s;
+  }
+  .social-row a:hover{border-color:var(--gold); background:rgba(201,162,77,0.08);}
+  .social-row svg{width:17px; height:17px; fill:currentColor;}
+
+  /* ---------- FLOATING WHATSAPP ---------- */
+  .wa-float{
+    position:fixed; bottom:22px; right:22px; z-index:200;
+    width:60px; height:60px; border-radius:50%;
+    background:linear-gradient(135deg,var(--gold-light),var(--gold));
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 10px 30px rgba(201,162,77,0.35);
+    animation:pulse 2.6s infinite;
+  }
+  .wa-float svg{width:28px; height:28px; fill:#141209;}
+  @keyframes pulse{
+    0%{box-shadow:0 10px 30px rgba(201,162,77,0.35);}
+    50%{box-shadow:0 10px 30px rgba(201,162,77,0.6), 0 0 0 10px rgba(201,162,77,0.06);}
+    100%{box-shadow:0 10px 30px rgba(201,162,77,0.35);}
+  }
+
+  /* ---------- REVEAL ANIM ---------- */
+  .reveal{opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  /* ---------- MOBILE ---------- */
+  @media(max-width:980px){
+    .grid{grid-template-columns:repeat(2,1fr);}
+    .about-grid{grid-template-columns:1fr; gap:36px;}
+    .perks-grid{grid-template-columns:repeat(2,1fr);}
+    .footer-grid{grid-template-columns:1fr 1fr; gap:32px;}
+  }
+  @media(max-width:720px){
+    nav.main-nav{
+      position:fixed; inset:0; top:72px; background:var(--black);
+      flex-direction:column; align-items:center; justify-content:center; gap:30px;
+      transform:translateX(100%); transition:transform .35s ease; padding-bottom:80px;
+    }
+    nav.main-nav.open{transform:translateX(0);}
+    nav.main-nav a{font-size:18px; opacity:1;}
+    .burger{display:flex;}
+    .header-cta .btn-outline{display:none;}
+    .grid{grid-template-columns:repeat(2,1fr); gap:14px;}
+    .card-body{padding:14px;}
+    .card-body h3{font-size:17px;}
+    .card-price .price{font-size:20px;}
+    .card-cta{padding:10px; font-size:10.5px;}
+    section{padding:64px 0;}
+    .hero{padding-top:72px;}
+    .hero-inner{padding-top:20px; padding-bottom:40px;}
+    .hero-stats{gap:28px;}
+    .perks-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr; gap:28px;}
+    .wrap{padding:0 18px;}
+  }
+  @media(max-width:420px){
+    .grid{grid-template-columns:1fr 1fr; gap:12px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header>
+  <div class="wrap header-inner">
+    <a href="#topo" class="logo-mark">
+      <img src="images/logo.jpeg" alt="Batista Imports">
+    </a>
+    <nav class="main-nav" id="mainNav">
+      <a href="#produtos">Destaques</a>
+      <a href="#catalogo">Catálogo</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#vantagens">Vantagens</a>
+      <a href="#footer">Contato</a>
+    </nav>
+    <div class="header-cta">
+      <a href="https://wa.me/message/NZ6U5EUCELQZH1" target="_blank" class="btn btn-outline" rel="noopener">WhatsApp</a>
+      <div class="burger" id="burger"><span></span><span></span><span></span></div>
+    </div>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="topo">
+  <div class="hero-slash"></div>
+  <div class="wrap hero-inner">
+    <span class="eyebrow">Moda Masculina Premium — Gravataí / RS</span>
+    <h1>Estilo que <em>impõe</em><br>presença.</h1>
+    <p class="lead">Peças selecionadas das grifes que você admira. Qualidade real, exclusividade de verdade e compra 100% pelo WhatsApp — do Instagram direto pro seu guarda-roupa.</p>
+    <div class="hero-actions">
+      <a href="#catalogo" class="btn btn-gold">Ver Catálogo</a>
+      <a href="https://wa.me/message/NZ6U5EUCELQZH1" target="_blank" class="btn btn-outline" rel="noopener">Falar no WhatsApp</a>
+    </div>
+    <div class="hero-stats">
+      <div><span class="num">100%</span><span class="label">Loja Online</span></div>
+      <div><span class="num">BR</span><span class="label">Envio p/ todo o Brasil</span></div>
+      <div><span class="num">★★★★★</span><span class="label">Peças Selecionadas</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SOBRE ================= -->
+<section class="about" id="sobre">
+  <div class="wrap about-grid">
+    <div class="about-visual reveal">
+      <img src="images/lacoste-grupo.jpeg" alt="Coleção Batista Imports">
+      <span class="tag">@batista_imports_</span>
+    </div>
+    <div class="about-text reveal">
+      <span class="eyebrow">Sobre a Batista Imports</span>
+      <h2>Curadoria séria.<br>Padrão elevado.</h2>
+      <p>Somos uma loja 100% online focada em moda masculina premium. Cada peça do catálogo é escolhida a dedo — cortes, materiais e acabamento com o padrão que grife de verdade entrega. Sem enrolação: você escolhe, chama no WhatsApp e a gente cuida do resto, com envio para qualquer cidade do Brasil.</p>
+      <div class="about-points">
+        <div><strong>Exclusividade</strong>Peças com identidade, fora do óbvio.</div>
+        <div><strong>Qualidade</strong>Seleção criteriosa, sem meio-termo.</div>
+        <div><strong>Envio Brasil</strong>Sua compra chega em qualquer estado.</div>
+        <div><strong>Direto no Zap</strong>Compra simples, rápida e sem burocracia.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DESTAQUES ================= -->
+<section id="produtos">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>Em Destaque</h2>
+      <p>Seleção da semana — as peças que mais saem no Instagram, direto pro catálogo.</p>
+    </div>
+    <div class="grid" id="featuredGrid"></div>
+  </div>
+</section>
+
+<!-- ================= CATALOGO ================= -->
+<section id="catalogo">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>Catálogo Completo</h2>
+      <p>Filtre por categoria, escolha a sua e chame no WhatsApp para fechar.</p>
+    </div>
+    <div class="filters reveal" id="filters"></div>
+    <div class="grid" id="catalogGrid"></div>
+  </div>
+</section>
+
+<!-- ================= VANTAGENS ================= -->
+<section class="perks" id="vantagens">
+  <div class="wrap">
+    <div class="section-head reveal" style="margin-bottom:0;">
+      <h2>Por que comprar aqui</h2>
+      <p></p>
+    </div>
+  </div>
+  <div class="wrap" style="padding-top:44px;">
+    <div class="perks-grid reveal">
+      <div class="perk">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+        <h3>Atendimento rápido</h3>
+        <p>Resposta ágil no WhatsApp, sem robô e sem enrolação.</p>
+      </div>
+      <div class="perk">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5L18.5 21 12 16.5 5.5 21l2-7.5L2 9h7z"/></svg></div>
+        <h3>Peças selecionadas</h3>
+        <p>Curadoria feita à mão, com foco em qualidade e caimento.</p>
+      </div>
+      <div class="perk">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M3 7h13v9H3zM16 10h4l2 3v3h-6z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17.5" cy="18" r="1.6"/></svg></div>
+        <h3>Envio para o Brasil</h3>
+        <p>Compre de onde estiver — a gente entrega em todo o país.</p>
+      </div>
+      <div class="perk">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.35-9.5-8.5C.5 8.5 3 5 6.5 5 9 5 11 7 12 8c1-1 3-3 5.5-3C21 5 23.5 8.5 21.5 12.5 19 16.65 12 21 12 21z"/></svg></div>
+        <h3>Compra fácil</h3>
+        <p>Sem cadastro, sem fricção — tudo direto pelo WhatsApp.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CTA FINAL ================= -->
+<section class="cta-strip">
+  <div class="wrap">
+    <span class="eyebrow">Pronto pra elevar o guarda-roupa?</span>
+    <h2>Escolha sua peça e fale <br>direto com a Batista Imports.</h2>
+    <p>Atendimento humano, rápido e sem burocracia — do "oi" ao rastreio.</p>
+    <a href="https://wa.me/message/NZ6U5EUCELQZH1" target="_blank" class="btn btn-gold" rel="noopener">Chamar no WhatsApp agora</a>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer id="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="images/logo.jpeg" alt="Batista Imports">
+        <p>Moda masculina premium, 100% online. Qualidade, exclusividade e envio para todo o Brasil.</p>
+        <div class="social-row" style="margin-top:20px;">
+          <a href="https://instagram.com/batista_imports_" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.85.07 1.25.06 2.1.25 2.85.55.77.3 1.42.7 2.06 1.35.65.64 1.05 1.3 1.35 2.06.3.75.5 1.6.55 2.85.07 1.25.07 1.65.07 4.85s0 3.6-.07 4.85c-.06 1.25-.25 2.1-.55 2.85a5.7 5.7 0 01-1.35 2.06 5.7 5.7 0 01-2.06 1.35c-.75.3-1.6.5-2.85.55-1.25.07-1.65.07-4.85.07s-3.6 0-4.85-.07c-1.25-.06-2.1-.25-2.85-.55a5.7 5.7 0 01-2.06-1.35 5.7 5.7 0 01-1.35-2.06c-.3-.75-.5-1.6-.55-2.85C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.85c.06-1.25.25-2.1.55-2.85.3-.77.7-1.42 1.35-2.06A5.7 5.7 0 016.23 2.9c.75-.3 1.6-.5 2.85-.55C10.33 2.2 10.73 2.2 12 2.2zm0 1.8c-3.15 0-3.52 0-4.76.07-1.02.05-1.57.22-1.94.36-.49.19-.84.42-1.2.79-.37.36-.6.71-.79 1.2-.14.37-.31.92-.36 1.94-.06 1.24-.07 1.6-.07 4.76s0 3.52.07 4.76c.05 1.02.22 1.57.36 1.94.19.49.42.84.79 1.2.36.37.71.6 1.2.79.37.14.92.31 1.94.36 1.24.06 1.6.07 4.76.07s3.52 0 4.76-.07c1.02-.05 1.57-.22 1.94-.36.49-.19.84-.42 1.2-.79.37-.36.6-.71.79-1.2.14-.37.31-.92.36-1.94.06-1.24.07-1.6.07-4.76s0-3.52-.07-4.76c-.05-1.02-.22-1.57-.36-1.94a3.9 3.9 0 00-.79-1.2 3.9 3.9 0 00-1.2-.79c-.37-.14-.92-.31-1.94-.36-1.24-.06-1.6-.07-4.76-.07zm0 3.5a4.5 4.5 0 110 9 4.5 4.5 0 010-9zm0 1.8a2.7 2.7 0 100 5.4 2.7 2.7 0 000-5.4zm5.7-2a1.05 1.05 0 110 2.1 1.05 1.05 0 010-2.1z"/></svg>
+          </a>
+          <a href="https://wa.me/message/NZ6U5EUCELQZH1" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24"><path d="M12.02 2C6.5 2 2 6.5 2 12.02c0 1.9.53 3.68 1.44 5.2L2 22l4.9-1.4a9.96 9.96 0 005.12 1.4c5.53 0 10.02-4.5 10.02-10.02C22.04 6.5 17.55 2 12.02 2zm0 18.16c-1.66 0-3.2-.47-4.5-1.28l-.32-.2-2.9.83.83-2.83-.21-.33a8.14 8.14 0 01-1.27-4.35c0-4.5 3.66-8.16 8.37-8.16 4.5 0 8.16 3.66 8.16 8.16 0 4.5-3.66 8.16-8.16 8.16zm4.5-6.1c-.25-.12-1.47-.72-1.7-.8-.23-.08-.4-.12-.56.12-.17.25-.65.8-.8.96-.15.17-.3.19-.55.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.25-.02-.38.11-.5.11-.11.25-.3.37-.44.12-.15.16-.25.25-.42.08-.17.04-.31-.02-.44-.06-.12-.56-1.35-.77-1.85-.2-.48-.4-.42-.56-.42h-.48c-.17 0-.44.06-.67.31-.23.25-.87.85-.87 2.08 0 1.22.9 2.4 1.02 2.57.12.17 1.77 2.7 4.28 3.79.6.26 1.06.41 1.43.53.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.18.2-.58.2-1.08.14-1.18-.06-.1-.23-.16-.48-.28z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navegação</h4>
+        <a href="#produtos">Destaques</a>
+        <a href="#catalogo">Catálogo</a>
+        <a href="#sobre">Sobre</a>
+        <a href="#vantagens">Vantagens</a>
+      </div>
+      <div class="footer-col">
+        <h4>Categorias</h4>
+        <a href="#catalogo" data-cat="Camisetas">Camisetas</a>
+        <a href="#catalogo" data-cat="Camisas">Camisas</a>
+        <a href="#catalogo" data-cat="Bermudas">Bermudas</a>
+        <a href="#catalogo" data-cat="Conjuntos">Conjuntos</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contato</h4>
+        <p>Gravataí — RS</p>
+        <a href="https://wa.me/message/NZ6U5EUCELQZH1" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="https://instagram.com/batista_imports_" target="_blank" rel="noopener">@batista_imports_</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Batista Imports. Todos os direitos reservados.</p>
+      <p>Loja 100% online — envio para todo o Brasil.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ================= WHATSAPP FLUTUANTE ================= -->
+<a href="https://wa.me/message/NZ6U5EUCELQZH1" target="_blank" class="wa-float" rel="noopener" aria-label="Chamar no WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M12.02 2C6.5 2 2 6.5 2 12.02c0 1.9.53 3.68 1.44 5.2L2 22l4.9-1.4a9.96 9.96 0 005.12 1.4c5.53 0 10.02-4.5 10.02-10.02C22.04 6.5 17.55 2 12.02 2zm0 18.16c-1.66 0-3.2-.47-4.5-1.28l-.32-.2-2.9.83.83-2.83-.21-.33a8.14 8.14 0 01-1.27-4.35c0-4.5 3.66-8.16 8.37-8.16 4.5 0 8.16 3.66 8.16 8.16 0 4.5-3.66 8.16-8.16 8.16zm4.5-6.1c-.25-.12-1.47-.72-1.7-.8-.23-.08-.4-.12-.56.12-.17.25-.65.8-.8.96-.15.17-.3.19-.55.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.25-.02-.38.11-.5.11-.11.25-.3.37-.44.12-.15.16-.25.25-.42.08-.17.04-.31-.02-.44-.06-.12-.56-1.35-.77-1.85-.2-.48-.4-.42-.56-.42h-.48c-.17 0-.44.06-.67.31-.23.25-.87.85-.87 2.08 0 1.22.9 2.4 1.02 2.57.12.17 1.77 2.7 4.28 3.79.6.26 1.06.41 1.43.53.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.18.2-.58.2-1.08.14-1.18-.06-.1-.23-.16-.48-.28z"/></svg>
+</a>
+
+<script>
+/* =========================================================
+   CATÁLOGO DE PRODUTOS
+   Para atualizar depois: edite este array. Cada item precisa de:
+   nome, categoria, preco, precoAntigo (opcional), imagem, destaque (true/false)
+========================================================= */
+const WHATSAPP_BASE = "https://wa.me/message/NZ6U5EUCELQZH1";
+
+const produtos = [
+  {
+    nome: "Bermuda Armani Exchange Listrada",
+    categoria: "Bermudas",
+    preco: 189.90,
+    imagem: "images/bermuda-ax.jpeg",
+    destaque: true
+  },
+  {
+    nome: "Polo Armani Exchange Piquet + Boné",
+    categoria: "Camisetas",
+    preco: 229.90,
+    precoAntigo: 269.90,
+    imagem: "images/polo-ax.jpeg",
+    destaque: true
+  },
+  {
+    nome: "Polo Tommy Hilfiger Preta",
+    categoria: "Camisetas",
+    preco: 199.90,
+    imagem: "images/polo-th-preto.jpeg",
+    destaque: true
+  },
+  {
+    nome: "Polo Tommy Hilfiger Branca + Boné",
+    categoria: "Camisetas",
+    preco: 219.90,
+    imagem: "images/polo-th-branca.jpeg",
+    destaque: false
+  },
+  {
+    nome: "Polo Tommy Hilfiger Vermelha + Boné",
+    categoria: "Camisetas",
+    preco: 219.90,
+    imagem: "images/polo-th-vermelha.jpeg",
+    destaque: true
+  },
+  {
+    nome: "Conjunto Polo Lacoste + Chinelo",
+    categoria: "Conjuntos",
+    preco: 249.90,
+    precoAntigo: 289.90,
+    imagem: "images/lacoste-grupo.jpeg",
+    destaque: true
+  },
+  {
+    nome: "Polo Lacoste Preta + Chinelo",
+    categoria: "Conjuntos",
+    preco: 239.90,
+    imagem: "images/polo-lacoste-preta.jpeg",
+    destaque: false
+  },
+  {
+    nome: "Polo Lacoste Off White + Chinelo",
+    categoria: "Conjuntos",
+    preco: 239.90,
+    imagem: "images/polo-lacoste-branca.jpeg",
+    destaque: false
+  },
+  {
+    nome: "Polo Lacoste Marinho + Chinelo",
+    categoria: "Conjuntos",
+    preco: 239.90,
+    imagem: "images/polo-lacoste-marinho.jpeg",
+    destaque: false
+  }
+];
+
+const categorias = ["Todos", "Camisetas", "Camisas", "Bermudas", "Moletons", "Jaquetas", "Conjuntos", "Novidades"];
+
+function fmt(v){
+  return v.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2});
+}
+
+function waLink(nome){
+  const msg = encodeURIComponent(`Olá! Tenho interesse na peça: ${nome}. Pode me passar mais informações?`);
+  return `${WHATSAPP_BASE}?text=${msg}`;
+}
+
+function cardHTML(p){
+  return `
+  <article class="card">
+    <div class="card-media">
+      <img src="${p.imagem}" alt="${p.nome}" loading="lazy">
+      ${p.precoAntigo ? '<span class="card-badge">Oferta</span>' : ''}
+    </div>
+    <div class="card-body">
+      <span class="cat">${p.categoria}</span>
+      <h3>${p.nome}</h3>
+      <div class="card-price">
+        <span class="price">R$ ${fmt(p.preco)}</span>
+        ${p.precoAntigo ? `<span class="old">R$ ${fmt(p.precoAntigo)}</span>` : ''}
+      </div>
+      <a class="card-cta" href="${waLink(p.nome)}" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M12.02 2C6.5 2 2 6.5 2 12.02c0 1.9.53 3.68 1.44 5.2L2 22l4.9-1.4a9.96 9.96 0 005.12 1.4c5.53 0 10.02-4.5 10.02-10.02C22.04 6.5 17.55 2 12.02 2zm0 18.16c-1.66 0-3.2-.47-4.5-1.28l-.32-.2-2.9.83.83-2.83-.21-.33a8.14 8.14 0 01-1.27-4.35c0-4.5 3.66-8.16 8.37-8.16 4.5 0 8.16 3.66 8.16 8.16 0 4.5-3.66 8.16-8.16 8.16z"/></svg>
+        Chamar no WhatsApp
+      </a>
+    </div>
+  </article>`;
+}
+
+// Destaques
+const featuredGrid = document.getElementById('featuredGrid');
+featuredGrid.innerHTML = produtos.filter(p => p.destaque).map(cardHTML).join('');
+
+// Filtros
+const filtersEl = document.getElementById('filters');
+filtersEl.innerHTML = categorias.map((c,i) => `<button class="filter-btn ${i===0?'active':''}" data-filter="${c}">${c}</button>`).join('');
+
+const catalogGrid = document.getElementById('catalogGrid');
+function renderCatalog(filter){
+  const list = filter === "Todos" ? produtos : produtos.filter(p => p.categoria === filter);
+  catalogGrid.innerHTML = list.length
+    ? list.map(cardHTML).join('')
+    : `<p style="color:var(--grey); grid-column:1/-1;">Novidades chegando em breve nesta categoria. Fale no WhatsApp e a gente te avisa primeiro.</p>`;
+}
+renderCatalog("Todos");
+
+filtersEl.addEventListener('click', (e)=>{
+  const btn = e.target.closest('.filter-btn');
+  if(!btn) return;
+  filtersEl.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCatalog(btn.dataset.filter);
+});
+
+// Links de categoria no rodapé abrem o catálogo já filtrado
+document.querySelectorAll('[data-cat]').forEach(a=>{
+  a.addEventListener('click', (e)=>{
+    const cat = a.dataset.cat;
+    setTimeout(()=>{
+      const target = [...filtersEl.querySelectorAll('.filter-btn')].find(b=>b.dataset.filter===cat);
+      if(target) target.click();
+    }, 300);
+  });
+});
+
+// Menu mobile
+const burger = document.getElementById('burger');
+const mainNav = document.getElementById('mainNav');
+burger.addEventListener('click', ()=>{
+  mainNav.classList.toggle('open');
+  burger.classList.toggle('open');
+});
+mainNav.querySelectorAll('a').forEach(a=>a.addEventListener('click', ()=>{
+  mainNav.classList.remove('open');
+}));
+
+// Reveal on scroll
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+  });
+},{threshold:0.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
