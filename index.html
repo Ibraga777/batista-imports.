@@ -976,9 +976,31 @@ document.addEventListener('click', (e)=>{
   abrirCheckout(btn.dataset.id);
 });
 
+async function carregarProdutosManuais(){
+  try{
+    const res = await fetch('produtos-manual.json?_=' + Date.now(), { cache: "no-store" });
+    if(!res.ok) return [];
+    const data = await res.json();
+    return Array.isArray(data) ? data.filter(p => p.ativo !== false) : [];
+  }catch(err){
+    console.warn("Sem produtos-manual.json ainda (normal se você nunca usou o admin):", err);
+    return [];
+  }
+}
+
 (async function init(){
-  const daPlanilha = await carregarProdutosDaPlanilha();
-  if(daPlanilha) produtos = daPlanilha;
+  const [daPlanilha, manuais] = await Promise.all([
+    carregarProdutosDaPlanilha(),
+    carregarProdutosManuais()
+  ]);
+  const base = daPlanilha || produtosFallback;
+  if(manuais.length){
+    // Produtos adicionados pelo painel admin entram junto; se o id bater com um da planilha, o manual vence.
+    const semDuplicados = base.filter(p => !manuais.some(m => String(m.id) === String(p.id)));
+    produtos = [...semDuplicados, ...manuais];
+  } else {
+    produtos = base;
+  }
   renderTudo();
 })();
 

@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel Batista Imports — Fotos &amp; Produtos</title>
+<meta name="robots" content="noindex, nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#0b0b0c; --panel:#17171a; --panel2:#1d1d21;
+    --gold:#c9a24d; --gold-light:#e6c878; --gold-dim:#8a6f34;
+    --off-white:#f3f1ec; --grey:#8c8a86; --line:rgba(201,162,77,0.18);
+    --ok:#5cb87a; --bad:#e0665a; --radius:6px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--black); color:var(--off-white); font-family:'Inter',sans-serif; padding:20px; padding-bottom:80px;}
+  h1,h2{font-family:'Bebas Neue',sans-serif; letter-spacing:0.03em; font-weight:400;}
+  h1{font-size:30px; color:var(--gold-light);}
+  h2{font-size:22px; margin-bottom:14px; color:var(--off-white);}
+  .wrap{max-width:760px; margin:0 auto;}
+  .sub{color:var(--grey); font-size:13.5px; margin-top:6px; margin-bottom:28px; line-height:1.5;}
+  .card{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:20px; margin-bottom:24px;}
+  label{display:block; font-size:12px; text-transform:uppercase; letter-spacing:0.06em; color:var(--grey); margin-bottom:6px; margin-top:14px;}
+  label:first-child{margin-top:0;}
+  input[type=text], input[type=password], input[type=number], select, textarea{
+    width:100%; background:var(--panel2); border:1px solid var(--line); color:var(--off-white);
+    padding:11px 12px; border-radius:4px; font-size:14.5px; font-family:inherit;
+  }
+  input:focus, select:focus, textarea:focus{outline:1px solid var(--gold);}
+  .row{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  .row3{display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px;}
+  .check{display:flex; align-items:center; gap:8px; margin-top:16px;}
+  .check input{width:auto;}
+  .check label{margin:0; text-transform:none; font-size:14px; color:var(--off-white);}
+  button{
+    cursor:pointer; border:none; border-radius:4px; padding:12px 20px; font-weight:700;
+    font-size:13px; letter-spacing:0.06em; text-transform:uppercase; margin-top:18px;
+  }
+  .btn-gold{background:linear-gradient(135deg,var(--gold-light),var(--gold) 55%,var(--gold-dim)); color:#141209;}
+  .btn-gold:disabled{opacity:0.5; cursor:not-allowed;}
+  .btn-outline{background:transparent; border:1px solid var(--line); color:var(--off-white);}
+  .btn-danger{background:transparent; border:1px solid var(--bad); color:var(--bad); padding:7px 12px; font-size:11px; margin-top:0;}
+  .status{font-size:13px; margin-top:12px; padding:10px 12px; border-radius:4px; display:none;}
+  .status.ok{display:block; background:rgba(92,184,122,0.12); color:var(--ok); border:1px solid rgba(92,184,122,0.3);}
+  .status.bad{display:block; background:rgba(224,102,90,0.12); color:var(--bad); border:1px solid rgba(224,102,90,0.3);}
+  .status.info{display:block; background:rgba(201,162,77,0.1); color:var(--gold-light); border:1px solid var(--line);}
+  .gallery{display:grid; grid-template-columns:repeat(auto-fill,minmax(90px,1fr)); gap:10px; margin-top:16px;}
+  .gitem{position:relative; border:1px solid var(--line); border-radius:4px; overflow:hidden; background:#000;}
+  .gitem img{width:100%; aspect-ratio:1; object-fit:cover; display:block;}
+  .gitem .fname{font-size:9.5px; color:var(--grey); padding:4px 5px; word-break:break-all; line-height:1.3;}
+  .gitem button{position:absolute; top:4px; right:4px; padding:3px 6px; font-size:10px; margin:0;}
+  .plist{margin-top:16px; display:flex; flex-direction:column; gap:10px;}
+  .pitem{display:flex; gap:12px; align-items:center; border:1px solid var(--line); border-radius:4px; padding:10px; background:var(--panel2);}
+  .pitem img{width:50px; height:50px; object-fit:cover; border-radius:3px; background:#000; flex-shrink:0;}
+  .pitem .info{flex:1; min-width:0;}
+  .pitem .info b{display:block; font-size:14px;}
+  .pitem .info span{font-size:12px; color:var(--grey);}
+  .pitem .acts{display:flex; gap:6px; flex-shrink:0;}
+  .pitem .acts button{margin:0; padding:6px 10px; font-size:10.5px;}
+  .lockscreen{max-width:420px; margin:80px auto; text-align:center;}
+  .hidden{display:none !important;}
+  .filepick{border:1px dashed var(--line); border-radius:4px; padding:22px; text-align:center; cursor:pointer; margin-top:10px;}
+  .filepick:hover{border-color:var(--gold-dim);}
+  .thumbs{display:flex; flex-wrap:wrap; gap:10px; margin-top:14px;}
+  .thumb{width:84px;}
+  .thumb img{width:84px; height:84px; object-fit:cover; border-radius:4px; border:1px solid var(--line);}
+  .thumb input{margin-top:5px; font-size:10.5px; padding:5px 6px;}
+  small.hint{display:block; color:var(--grey); font-size:11.5px; margin-top:4px;}
+  .tag{display:inline-block; font-size:10px; background:rgba(201,162,77,0.15); color:var(--gold-light); padding:2px 8px; border-radius:10px; margin-left:6px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div id="lockscreen" class="lockscreen">
+    <h1>Painel Batista Imports</h1>
+    <p class="sub">Cole seu token de acesso do GitHub pra entrar. Ele fica salvo só neste navegador — nunca é enviado pra mais ninguém além do GitHub.</p>
+    <div class="card" style="text-align:left">
+      <label>Token do GitHub (Personal Access Token)</label>
+      <input type="password" id="cfgToken" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+      <div class="row">
+        <div>
+          <label>Usuário/Organização</label>
+          <input type="text" id="cfgOwner" value="ibraga777">
+        </div>
+        <div>
+          <label>Repositório</label>
+          <input type="text" id="cfgRepo" value="batista-imports.">
+        </div>
+      </div>
+      <label>Branch</label>
+      <input type="text" id="cfgBranch" value="main">
+      <small class="hint">Se der erro depois de conectar, tente trocar pra "master" aqui.</small>
+      <button class="btn-gold" id="btnConectar" style="width:100%">Conectar</button>
+      <div id="loginStatus" class="status"></div>
+    </div>
+  </div>
+
+  <div id="app" class="hidden">
+    <h1>Painel Batista Imports</h1>
+    <p class="sub">Conectado como <b id="whoOwner"></b> / <b id="whoRepo"></b>. <a href="#" id="btnSair" style="color:var(--gold-light)">Trocar conta / sair</a></p>
+
+    <div class="card">
+      <h2>📷 Enviar fotos</h2>
+      <p class="sub" style="margin-bottom:10px">As fotos são comprimidas automaticamente antes de enviar. Depois de subir, use o nome do arquivo no campo "Foto" ao criar um produto abaixo.</p>
+      <div class="filepick" id="filepick">Toque aqui pra escolher uma ou mais fotos</div>
+      <input type="file" id="fileInput" accept="image/*" multiple style="display:none">
+      <div class="thumbs" id="thumbs"></div>
+      <button class="btn-gold hidden" id="btnEnviarFotos">Enviar fotos</button>
+      <div id="uploadStatus" class="status"></div>
+
+      <h2 style="margin-top:26px; font-size:16px">Fotos já enviadas</h2>
+      <div class="gallery" id="gallery"></div>
+    </div>
+
+    <div class="card">
+      <h2 id="formTitle">➕ Adicionar produto</h2>
+      <label>Nome do produto</label>
+      <input type="text" id="pNome" placeholder="Ex: Polo Lacoste Preta + Chinelo">
+      <div class="row">
+        <div>
+          <label>Categoria</label>
+          <select id="pCategoria">
+            <option>Camisetas</option>
+            <option>Camisas</option>
+            <option>Bermudas</option>
+            <option>Moletons</option>
+            <option>Jaquetas</option>
+            <option>Conjuntos</option>
+            <option>Novidades</option>
+          </select>
+        </div>
+        <div>
+          <label>Foto</label>
+          <select id="pImagem"><option value="">— selecione uma foto enviada —</option></select>
+        </div>
+      </div>
+      <div class="row3">
+        <div>
+          <label>Preço (R$)</label>
+          <input type="number" step="0.01" id="pPreco" placeholder="199.90">
+        </div>
+        <div>
+          <label>Preço antigo (opcional)</label>
+          <input type="number" step="0.01" id="pPrecoAntigo" placeholder="">
+        </div>
+        <div>
+          <label>Estoque</label>
+          <input type="number" id="pEstoque" placeholder="5">
+        </div>
+      </div>
+      <div class="check"><input type="checkbox" id="pDestaque"><label for="pDestaque">Mostrar em "Destaques" na home</label></div>
+      <div class="check"><input type="checkbox" id="pAtivo" checked><label for="pAtivo">Ativo (visível no site)</label></div>
+      <button class="btn-gold" id="btnSalvarProduto">Salvar produto</button>
+      <button class="btn-outline hidden" id="btnCancelarEdicao" type="button">Cancelar edição</button>
+      <div id="produtoStatus" class="status"></div>
+    </div>
+
+    <div class="card">
+      <h2>🗂️ Produtos cadastrados por aqui</h2>
+      <p class="sub">Produtos que também vêm da sua planilha do Google não aparecem nesta lista — só os adicionados neste painel.</p>
+      <div class="plist" id="plist"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const LS_KEY = 'bi_admin_cfg';
+let cfg = null;
+let sheetsCache = { images: null, imagesSha: null, produtos: [], produtosSha: null };
+let pendingFiles = [];
+let editingId = null;
+
+function saveCfg(){ localStorage.setItem(LS_KEY, JSON.stringify(cfg)); }
+function loadCfg(){ try{ return JSON.parse(localStorage.getItem(LS_KEY)); }catch(e){ return null; } }
+
+function api(path){ return `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${path}`; }
+function headers(){ return { 'Authorization': `Bearer ${cfg.token}`, 'Accept': 'application/vnd.github+json' }; }
+
+async function ghGet(path){
+  const res = await fetch(`${api(path)}?ref=${encodeURIComponent(cfg.branch)}&_=${Date.now()}`, { headers: headers() });
+  if(res.status === 404) return null;
+  if(!res.ok) throw new Error(`Erro ao ler ${path}: ${res.status}`);
+  return res.json();
+}
+async function ghPut(path, base64Content, message, sha){
+  const body = { message, content: base64Content, branch: cfg.branch };
+  if(sha) body.sha = sha;
+  const res = await fetch(api(path), { method:'PUT', headers:{...headers(),'Content-Type':'application/json'}, body: JSON.stringify(body) });
+  if(!res.ok){ const t = await res.text(); throw new Error(`Erro ao salvar ${path}: ${res.status} ${t}`); }
+  return res.json();
+}
+async function ghDelete(path, sha, message){
+  const res = await fetch(api(path), { method:'DELETE', headers:{...headers(),'Content-Type':'application/json'}, body: JSON.stringify({ message, sha, branch: cfg.branch }) });
+  if(!res.ok) throw new Error(`Erro ao apagar ${path}: ${res.status}`);
+  return res.json();
+}
+
+function showStatus(el, msg, type){
+  el.textContent = msg; el.className = `status ${type}`;
+}
+
+// ---------- LOGIN ----------
+document.getElementById('btnConectar').addEventListener('click', async ()=>{
+  const token = document.getElementById('cfgToken').value.trim();
+  const owner = document.getElementById('cfgOwner').value.trim();
+  const repo = document.getElementById('cfgRepo').value.trim();
+  const branch = document.getElementById('cfgBranch').value.trim() || 'main';
+  const st = document.getElementById('loginStatus');
+  if(!token || !owner || !repo){ showStatus(st,'Preencha token, usuário e repositório.','bad'); return; }
+  cfg = { token, owner, repo, branch };
+  showStatus(st,'Conectando...','info');
+  try{
+    const res = await fetch(`https://api.github.com/repos/${owner}/${repo}`, { headers: headers() });
+    if(res.status === 401) throw new Error('Token inválido ou sem permissão.');
+    if(res.status === 404) throw new Error('Repositório não encontrado — confira usuário/repositório.');
+    if(!res.ok) throw new Error(`Erro ${res.status}`);
+    saveCfg();
+    entrarNoApp();
+  }catch(err){
+    showStatus(st, err.message, 'bad');
+  }
+});
+
+document.getElementById('btnSair').addEventListener('click', (e)=>{
+  e.preventDefault();
+  localStorage.removeItem(LS_KEY);
+  location.reload();
+});
+
+async function entrarNoApp(){
+  document.getElementById('lockscreen').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
+  document.getElementById('whoOwner').textContent = cfg.owner;
+  document.getElementById('whoRepo').textContent = cfg.repo;
+  await carregarGaleria();
+  await carregarProdutos();
+}
+
+(function tryAutoLogin(){
+  const saved = loadCfg();
+  if(saved && saved.token){ cfg = saved; entrarNoApp(); }
+})();
+
+// ---------- FOTOS ----------
+const filepick = document.getElementById('filepick');
+const fileInput = document.getElementById('fileInput');
+filepick.addEventListener('click', ()=>fileInput.click());
+fileInput.addEventListener('change', (e)=>{
+  pendingFiles = Array.from(e.target.files);
+  renderThumbs();
+});
+
+function slugify(name){
+  return name.normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .toLowerCase().replace(/\.[a-z0-9]+$/,'')
+    .replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'') || 'foto';
+}
+
+function renderThumbs(){
+  const wrap = document.getElementById('thumbs');
+  wrap.innerHTML = '';
+  pendingFiles.forEach((file, i)=>{
+    const url = URL.createObjectURL(file);
+    const div = document.createElement('div');
+    div.className = 'thumb';
+    div.innerHTML = `<img src="${url}"><input type="text" data-i="${i}" value="${slugify(file.name)}">`;
+    wrap.appendChild(div);
+  });
+  document.getElementById('btnEnviarFotos').classList.toggle('hidden', pendingFiles.length === 0);
+}
+
+function comprimirImagem(file){
+  return new Promise((resolve, reject)=>{
+    const img = new Image();
+    const reader = new FileReader();
+    reader.onload = ()=>{ img.src = reader.result; };
+    reader.onerror = reject;
+    img.onload = ()=>{
+      const maxW = 1400;
+      const scale = Math.min(1, maxW / img.width);
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width * scale;
+      canvas.height = img.height * scale;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.82);
+      resolve(dataUrl.split(',')[1]);
+    };
+    img.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+async function nomeUnico(baseSlug){
+  const existentes = new Set((sheetsCache.images||[]).map(f=>f.name));
+  let nome = `${baseSlug}.jpg`, n = 2;
+  while(existentes.has(nome)){ nome = `${baseSlug}-${n}.jpg`; n++; }
+  return nome;
+}
+
+document.getElementById('btnEnviarFotos').addEventListener('click', async ()=>{
+  const st = document.getElementById('uploadStatus');
+  const btn = document.getElementById('btnEnviarFotos');
+  btn.disabled = true;
+  const inputs = document.querySelectorAll('#thumbs input');
+  try{
+    for(let i=0;i<pendingFiles.length;i++){
+      showStatus(st, `Enviando foto ${i+1} de ${pendingFiles.length}...`, 'info');
+      const slug = slugify(inputs[i].value || pendingFiles[i].name);
+      const nome = await nomeUnico(slug);
+      const base64 = await comprimirImagem(pendingFiles[i]);
+      await ghPut(`images/${nome}`, base64, `Admin: adiciona foto ${nome}`);
+      sheetsCache.images = sheetsCache.images || [];
+      sheetsCache.images.push({ name: nome });
+    }
+    showStatus(st, 'Fotos enviadas com sucesso!', 'ok');
+    pendingFiles = [];
+    document.getElementById('thumbs').innerHTML = '';
+    document.getElementById('btnEnviarFotos').classList.add('hidden');
+    await carregarGaleria();
+  }catch(err){
+    showStatus(st, err.message, 'bad');
+  }
+  btn.disabled = false;
+});
+
+async function carregarGaleria(){
+  const gal = document.getElementById('gallery');
+  const sel = document.getElementById('pImagem');
+  gal.innerHTML = '<p class="sub">Carregando...</p>';
+  try{
+    const list = await ghGet('images');
+    const files = (list || []).filter(f => f.type === 'file' && /\.(jpe?g|png|webp|gif)$/i.test(f.name));
+    sheetsCache.images = files;
+    gal.innerHTML = '';
+    sel.innerHTML = '<option value="">— selecione uma foto enviada —</option>';
+    files.forEach(f=>{
+      const item = document.createElement('div');
+      item.className = 'gitem';
+      item.innerHTML = `<img src="${f.download_url}" loading="lazy"><button class="btn-danger" data-name="${f.name}" data-sha="${f.sha}">✕</button><div class="fname">${f.name}</div>`;
+      gal.appendChild(item);
+      const opt = document.createElement('option');
+      opt.value = `images/${f.name}`; opt.textContent = f.name;
+      sel.appendChild(opt);
+    });
+    if(!files.length) gal.innerHTML = '<p class="sub">Nenhuma foto enviada ainda.</p>';
+    gal.querySelectorAll('button[data-sha]').forEach(b=>{
+      b.addEventListener('click', async ()=>{
+        if(!confirm(`Apagar a foto "${b.dataset.name}"?`)) return;
+        try{
+          await ghDelete(`images/${b.dataset.name}`, b.dataset.sha, `Admin: remove foto ${b.dataset.name}`);
+          await carregarGaleria();
+        }catch(err){ alert(err.message); }
+      });
+    });
+  }catch(err){
+    gal.innerHTML = `<p class="sub" style="color:var(--bad)">${err.message}</p>`;
+  }
+}
+
+// ---------- PRODUTOS ----------
+async function carregarProdutos(){
+  const list = document.getElementById('plist');
+  try{
+    const file = await ghGet('produtos-manual.json');
+    let produtos = [];
+    if(file){
+      produtos = JSON.parse(decodeURIComponent(escape(atob(file.content.replace(/\n/g,'')))));
+      sheetsCache.produtosSha = file.sha;
+    } else {
+      sheetsCache.produtosSha = null;
+    }
+    sheetsCache.produtos = produtos;
+    renderPlist();
+  }catch(err){
+    list.innerHTML = `<p class="sub" style="color:var(--bad)">${err.message}</p>`;
+  }
+}
+
+function renderPlist(){
+  const list = document.getElementById('plist');
+  const produtos = sheetsCache.produtos;
+  if(!produtos.length){ list.innerHTML = '<p class="sub">Nenhum produto adicionado por aqui ainda.</p>'; return; }
+  list.innerHTML = '';
+  produtos.forEach(p=>{
+    const div = document.createElement('div');
+    div.className = 'pitem';
+    div.innerHTML = `
+      <img src="${p.imagem || ''}">
+      <div class="info">
+        <b>${p.nome} ${p.ativo === false ? '<span class="tag" style="background:rgba(224,102,90,.15);color:#e0665a">inativo</span>' : ''}${p.destaque ? '<span class="tag">destaque</span>' : ''}</b>
+        <span>${p.categoria} · R$ ${Number(p.preco).toFixed(2)} · estoque: ${p.estoque}</span>
+      </div>
+      <div class="acts">
+        <button class="btn-outline" data-edit="${p.id}">Editar</button>
+        <button class="btn-danger" data-del="${p.id}">Apagar</button>
+      </div>`;
+    list.appendChild(div);
+  });
+  list.querySelectorAll('[data-edit]').forEach(b=>b.addEventListener('click', ()=>editarProduto(b.dataset.edit)));
+  list.querySelectorAll('[data-del]').forEach(b=>b.addEventListener('click', ()=>apagarProduto(b.dataset.del)));
+}
+
+function limparForm(){
+  document.getElementById('pNome').value = '';
+  document.getElementById('pCategoria').value = 'Camisetas';
+  document.getElementById('pImagem').value = '';
+  document.getElementById('pPreco').value = '';
+  document.getElementById('pPrecoAntigo').value = '';
+  document.getElementById('pEstoque').value = '';
+  document.getElementById('pDestaque').checked = false;
+  document.getElementById('pAtivo').checked = true;
+  editingId = null;
+  document.getElementById('formTitle').textContent = '➕ Adicionar produto';
+  document.getElementById('btnCancelarEdicao').classList.add('hidden');
+}
+
+function editarProduto(id){
+  const p = sheetsCache.produtos.find(x=>String(x.id)===String(id));
+  if(!p) return;
+  document.getElementById('pNome').value = p.nome;
+  document.getElementById('pCategoria').value = p.categoria;
+  document.getElementById('pImagem').value = p.imagem;
+  document.getElementById('pPreco').value = p.preco;
+  document.getElementById('pPrecoAntigo').value = p.precoAntigo || '';
+  document.getElementById('pEstoque').value = p.estoque;
+  document.getElementById('pDestaque').checked = !!p.destaque;
+  document.getElementById('pAtivo').checked = p.ativo !== false;
+  editingId = id;
+  document.getElementById('formTitle').textContent = '✏️ Editando produto';
+  document.getElementById('btnCancelarEdicao').classList.remove('hidden');
+  window.scrollTo({top: document.getElementById('formTitle').offsetTop - 20, behavior:'smooth'});
+}
+
+document.getElementById('btnCancelarEdicao').addEventListener('click', limparForm);
+
+async function salvarProdutosNoGithub(mensagem){
+  const content = btoa(unescape(encodeURIComponent(JSON.stringify(sheetsCache.produtos, null, 2))));
+  const result = await ghPut('produtos-manual.json', content, mensagem, sheetsCache.produtosSha);
+  sheetsCache.produtosSha = result.content.sha;
+}
+
+document.getElementById('btnSalvarProduto').addEventListener('click', async ()=>{
+  const st = document.getElementById('produtoStatus');
+  const nome = document.getElementById('pNome').value.trim();
+  const preco = parseFloat(document.getElementById('pPreco').value);
+  const imagem = document.getElementById('pImagem').value;
+  if(!nome || isNaN(preco)){ showStatus(st, 'Preencha ao menos nome e preço.', 'bad'); return; }
+  const dados = {
+    id: editingId || ('m' + Date.now()),
+    nome,
+    categoria: document.getElementById('pCategoria').value,
+    preco,
+    precoAntigo: document.getElementById('pPrecoAntigo').value ? parseFloat(document.getElementById('pPrecoAntigo').value) : null,
+    estoque: parseInt(document.getElementById('pEstoque').value || '0', 10),
+    imagem: imagem || 'images/logo.jpeg',
+    destaque: document.getElementById('pDestaque').checked,
+    ativo: document.getElementById('pAtivo').checked,
+    linkPagamento: ''
+  };
+  showStatus(st, 'Salvando...', 'info');
+  try{
+    if(editingId){
+      const i = sheetsCache.produtos.findIndex(p=>String(p.id)===String(editingId));
+      sheetsCache.produtos[i] = dados;
+    } else {
+      sheetsCache.produtos.push(dados);
+    }
+    await salvarProdutosNoGithub(`Admin: ${editingId ? 'edita' : 'adiciona'} produto ${nome}`);
+    showStatus(st, 'Produto salvo! Já vai aparecer no site em instantes.', 'ok');
+    limparForm();
+    renderPlist();
+  }catch(err){
+    showStatus(st, err.message, 'bad');
+  }
+});
+
+async function apagarProduto(id){
+  if(!confirm('Apagar este produto?')) return;
+  sheetsCache.produtos = sheetsCache.produtos.filter(p=>String(p.id)!==String(id));
+  try{
+    await salvarProdutosNoGithub(`Admin: remove produto ${id}`);
+    renderPlist();
+  }catch(err){ alert(err.message); }
+}
+</script>
+</body>
+</html>
