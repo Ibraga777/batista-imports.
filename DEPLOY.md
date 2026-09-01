@@ -24,4 +24,22 @@ Oi! O site já está automático 🙌 Só precisa saber disto:
 4. Pra tirar uma peça do ar sem apagar ela, muda a coluna *ativo* de "sim" pra "nao".
 5. *Nunca apague uma linha inteira* — só edite os números, senão o site pode dar erro.
 6. Toda venda cai sozinha na aba *PEDIDOS*, já com nome, endereço e WhatsApp do cliente.
-7. Qualquer dúvida, me chama que eu ajusto.
+7. Pra trocar a foto de um produto: veja o passo a passo abaixo.
+8. Qualquer dúvida, me chama que eu ajusto.
+
+## Como adicionar/trocar fotos de produto (sem mexer em código)
+
+As fotos agora podem vir do Google Drive — o lojista sobe a foto lá, pega o link e cola na planilha.
+
+1. Crie (ou use) uma pasta no Google Drive só para as fotos da loja.
+2. Suba a foto do produto nessa pasta (pelo site do Drive ou pelo app do celular).
+3. Clique com o botão direito na foto → **Compartilhar** → em "Acesso geral" escolha **"Qualquer pessoa com o link"**.
+4. Clique em **Copiar link**. Vai ficar parecido com:
+   `https://drive.google.com/file/d/1AbCdEfGhIjKlMnOpQrStUvWxYz/view?usp=sharing`
+5. Vá na planilha, aba **PRODUTOS**, na linha do produto, coluna **imagem**, e cole esse link inteiro.
+6. Pronto — em alguns minutos a foto aparece no site automaticamente. Não precisa mexer no GitHub.
+
+Se preferir, o antigo jeito (arquivo dentro da pasta `images/` do site) continua funcionando — basta colocar
+só o nome do arquivo na coluna `imagem` (ex: `polo-nova.jpeg`), mas isso exige subir o arquivo no GitHub.
+Pelo Drive não precisa disso.
+

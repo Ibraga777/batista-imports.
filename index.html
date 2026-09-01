@@ -871,6 +871,35 @@ function toBool(v){
   return String(v).trim().toLowerCase() === "sim";
 }
 
+/**
+ * Resolve o valor da coluna "imagem" da planilha.
+ * Aceita:
+ *  - Link do Google Drive (arquivo compartilhado como "Qualquer pessoa com o link")
+ *    ex: https://drive.google.com/file/d/ARQUIVO_ID/view?usp=sharing
+ *  - Apenas o ID do arquivo do Drive (a parte final desse link)
+ *  - Qualquer URL http(s) direta de imagem
+ *  - Nome de arquivo local dentro da pasta images/ (comportamento antigo)
+ */
+function resolverImagem(valor){
+  const v = (valor || "").trim();
+  if(!v) return "images/logo.jpeg";
+
+  if(/^https?:\/\//i.test(v)){
+    const driveMatch = v.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/) ||
+                        v.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+    if(driveMatch){
+      return `https://lh3.googleusercontent.com/d/${driveMatch[1]}=w1000`;
+    }
+    return v;
+  }
+
+  if(/^[a-zA-Z0-9_-]{20,}$/.test(v)){
+    return `https://lh3.googleusercontent.com/d/${v}=w1000`;
+  }
+
+  return "images/" + v.replace(/^images\//, "");
+}
+
 async function carregarProdutosDaPlanilha(){
   if(!SHEET_CSV_URL || SHEET_CSV_URL.startsWith("COLE_AQUI")) return null;
   try{
@@ -905,7 +934,7 @@ async function carregarProdutosDaPlanilha(){
         estoque: iEstoque > -1 ? (parseInt((r[iEstoque]||"0"),10) || 0) : 0,
         destaque: iDestaque > -1 ? toBool(r[iDestaque]) : false,
         ativo: iAtivo > -1 ? toBool(r[iAtivo]) : true,
-        imagem: iImagem > -1 && r[iImagem] ? ("images/" + r[iImagem].trim().replace(/^images\//,"")) : "images/logo.jpeg",
+        imagem: iImagem > -1 ? resolverImagem(r[iImagem]) : "images/logo.jpeg",
         linkPagamento: iLink > -1 ? (r[iLink]||"").trim() : ""
       };
     }).filter(Boolean).filter(p => p.ativo);
@@ -976,31 +1005,9 @@ document.addEventListener('click', (e)=>{
   abrirCheckout(btn.dataset.id);
 });
 
-async function carregarProdutosManuais(){
-  try{
-    const res = await fetch('produtos-manual.json?_=' + Date.now(), { cache: "no-store" });
-    if(!res.ok) return [];
-    const data = await res.json();
-    return Array.isArray(data) ? data.filter(p => p.ativo !== false) : [];
-  }catch(err){
-    console.warn("Sem produtos-manual.json ainda (normal se você nunca usou o admin):", err);
-    return [];
-  }
-}
-
 (async function init(){
-  const [daPlanilha, manuais] = await Promise.all([
-    carregarProdutosDaPlanilha(),
-    carregarProdutosManuais()
-  ]);
-  const base = daPlanilha || produtosFallback;
-  if(manuais.length){
-    // Produtos adicionados pelo painel admin entram junto; se o id bater com um da planilha, o manual vence.
-    const semDuplicados = base.filter(p => !manuais.some(m => String(m.id) === String(p.id)));
-    produtos = [...semDuplicados, ...manuais];
-  } else {
-    produtos = base;
-  }
+  const daPlanilha = await carregarProdutosDaPlanilha();
+  if(daPlanilha) produtos = daPlanilha;
   renderTudo();
 })();
 
